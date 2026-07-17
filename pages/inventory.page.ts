@@ -43,7 +43,7 @@ export class InventoryPage {
     }
 
     async goToShoppingCart() {
-        await this.page.getByRole('link', { name: 'Shopping Cart' }).click();
+        await this.page.locator('.shopping_cart_link').click();
     }
 
     getShoppingCartBadge(): Locator {
