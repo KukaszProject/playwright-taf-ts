@@ -3,12 +3,14 @@ import {LoginPage} from '../pages/login.page';
 import {InventoryPage} from '../pages/inventory.page';
 import {CartPage} from '../pages/cart.page';
 import {CheckoutPage} from '../pages/checkout.page';
+import {HeaderComponent} from '../components/header.component';
 
 type TestFixtures = {
     loginPage: LoginPage;
     inventoryPage: InventoryPage;
     cartPage: CartPage;
     checkoutPage: CheckoutPage;
+    headerComponent: HeaderComponent;
 };
 
 export const test = baseTest.extend<TestFixtures>({
@@ -27,7 +29,10 @@ export const test = baseTest.extend<TestFixtures>({
     },
     checkoutPage: async ({page}, use) => {
         await use(new CheckoutPage(page));
-    }
+    },
+    headerComponent: async ({page}, use) => {
+        await use(new HeaderComponent(page));
+    },
 });
 
 export {expect} from '@playwright/test';
