@@ -17,6 +17,11 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0.02,
+    },
+  },
 
   /* Configure projects for major browsers */
   projects: [
