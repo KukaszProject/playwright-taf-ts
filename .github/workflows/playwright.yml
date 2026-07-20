@@ -38,7 +38,7 @@ jobs:
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
     - name: Merge Playwright Reports
       if: ${{ !cancelled() }}
-      run: npx playwright show-report --merge playwright-report blob-report-functional blob-report-non-functional
+      run: npx playwright merge-reports --reported=html blob-report-functional blob-report-non-functional
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
