@@ -3,12 +3,8 @@ import {USER_DATA} from '../data/user.data';
 import {CATALOG_DATA} from '../data/catalog.data';
 
 test.describe('Cart Page Flow', () => {
-    test.beforeEach(async ({loginPage, inventoryPage}) => {
-        await loginPage.navigate();
-        await loginPage.login(
-            USER_DATA.validUser.username, 
-            USER_DATA.validUser.password
-        );
+    test.beforeEach(async ({page, inventoryPage}) => {
+        await page.goto('/inventory.html');
         await inventoryPage.addItemsToCart(CATALOG_DATA.multipleItems);
         await inventoryPage.goToShoppingCart();
     });

@@ -1,6 +1,8 @@
 import {test, expect} from '../fixtures/base.test';
 import {USER_DATA} from '../data/user.data';
 
+test.use({ storageState: {cookies: [], origins: []} });
+
 test.describe('Login Page Verification', () => {
 
     test.beforeEach(async ({loginPage}) => {
