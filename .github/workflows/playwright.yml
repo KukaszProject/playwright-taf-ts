@@ -49,7 +49,7 @@ jobs:
 
   deploy-report:
     needs: test
-    if: !cancelled() && github.ref == 'refs/heads/main'
+    if: "!cancelled() && github.ref == 'refs/heads/main'"
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
