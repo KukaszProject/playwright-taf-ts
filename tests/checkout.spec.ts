@@ -5,12 +5,8 @@ import {CHECKOUT_DATA} from '../data/checkout.data';
 
 test.describe('Checkout Page Flow', () => {
 
-    test.beforeEach(async ({loginPage, inventoryPage, cartPage}) => {
-        await loginPage.navigate();
-        await loginPage.login(
-            USER_DATA.validUser.username, 
-            USER_DATA.validUser.password
-        );
+    test.beforeEach(async ({page, inventoryPage, cartPage}) => {
+        await page.goto('/inventory.html');
         await inventoryPage.addItemsToCart(CATALOG_DATA.multipleItems);
         await inventoryPage.goToShoppingCart();
         await cartPage.goToCheckout();

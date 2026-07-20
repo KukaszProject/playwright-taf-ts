@@ -3,9 +3,10 @@ import { USER_DATA } from '../data/user.data';
 import { CATALOG_DATA } from '../data/catalog.data';
 import { CHECKOUT_DATA } from '../data/checkout.data';
 
+test.use({ storageState: {cookies: [], origins: []} });
+
 test.describe('End-to-End Flow', () => {
     test('Should successfully complete the checkout process', async ({ 
-        page,
         loginPage, 
         inventoryPage, 
         cartPage, 
@@ -40,7 +41,6 @@ test.describe('End-to-End Flow', () => {
         inventoryPage,
         cartPage,
         checkoutPage,
-        headerComponent,
         page
     }) => {
         await loginPage.navigate();
