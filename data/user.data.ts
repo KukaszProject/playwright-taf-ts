@@ -1,11 +1,11 @@
 export const USER_DATA = {
     validUser: {
-        username: 'standard_user',
-        password: 'secret_sauce'
+        username: process.env.SAUCE_USERNAME as string,
+        password: process.env.SAUCE_PASSWORD as string
     },
     lockedUser: {
         username: 'locked_out_user',
-        password: 'secret_sauce'
+        password: process.env.SAUCE_PASSWORD as string
     },
     emptyUser: {
         username: '',
