@@ -34,7 +34,7 @@ test.describe('Accessibility Tests - logged in - @a11y', () => {
         await inventoryPage.addItemsToCart(['Sauce Labs Backpack', 'Sauce Labs Bike Light']);
         await inventoryPage.goToShoppingCart();
         await cartPage.goToCheckout();
-
+        
         const accessibilityScanResults = await new AxeBuilder({ page }).exclude('.known-bad-components').analyze();
         expect(accessibilityScanResults.violations).toEqual([]);
     });
