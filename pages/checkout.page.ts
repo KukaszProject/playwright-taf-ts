@@ -8,6 +8,7 @@ export class CheckoutPage {
     private readonly continueButton: Locator;
 
     private readonly finishButton: Locator;
+    private readonly cancelButton: Locator;
     private readonly completeHeader: Locator;
     private readonly errorMessage: Locator;
 
@@ -19,6 +20,7 @@ export class CheckoutPage {
         this.continueButton = page.locator('[data-test="continue"]');
 
         this.finishButton = page.locator('[data-test="finish"]');
+        this.cancelButton = page.locator('[data-test="cancel"]');
         this.completeHeader = page.locator('.complete-header');
         this.errorMessage = page.locator('[data-test="error"]');
     }
@@ -48,6 +50,10 @@ export class CheckoutPage {
 
     async completeCheckout() {
         await this.finishButton.click();
+    }
+
+    async cancelCheckout() {
+        await this.cancelButton.click();
     }
 
     getCompleteHeader(): Locator {
