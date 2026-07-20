@@ -26,14 +26,19 @@ jobs:
     - name: Run FunctionalPlaywright tests
       run: npx playwright test --grep-invert "@a11y|@visual"
       env: 
+        PLAYWRIGHT_HTML_REPORT: blob-report-functional
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
     - name: Run Non Functional tests
       run: npx playwright test --grep "@a11y|@visual"
       continue-on-error: true
       env: 
+        PLAYWRIGHT_HTML_REPORT: blob-report-non-functional
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
+    - name: Merge Playwright Reports
+      if: ${{ !cancelled() }}
+      run: npx playwright show-report --merge playwright-report blob-report-functional blob-report-non-functional
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
