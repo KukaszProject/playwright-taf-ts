@@ -1,7 +1,7 @@
 import { test, expect } from '../fixtures/base.test';
 import AxeBuilder from '@axe-core/playwright';
 
-test.describe('Accessibility Tests - logged out @a11y', () => {
+test.describe('Accessibility Tests - logged out - @a11y', () => {
     test.use({ storageState: {cookies: [], origins: []} });
 
     test('Login Page Accessibility', async ({page}) => {
@@ -12,7 +12,7 @@ test.describe('Accessibility Tests - logged out @a11y', () => {
 
 });
 
-test.describe('Accessibility Tests - logged in @a11y', () => {
+test.describe('Accessibility Tests - logged in - @a11y', () => {
     test('Inventory Page Accessibility', async ({page}) => {
         await page.goto('/inventory.html');
 

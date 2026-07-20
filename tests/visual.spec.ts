@@ -1,6 +1,6 @@
 import { test, expect } from '../fixtures/base.test';
 
-test.describe('Visual Baseline - logged out @visual', () => {
+test.describe('Visual Baseline - logged out - @visual', () => {
     test.use({ storageState: {cookies: [], origins: []} });
 
     test('Login Page', async ({page}) => {
@@ -10,7 +10,7 @@ test.describe('Visual Baseline - logged out @visual', () => {
     });
 });
 
-test.describe('Visual Baseline - logged in @visual', () => {
+test.describe('Visual Baseline - logged in - @visual', () => {
     test('Inventory Page', async ({page}) => {
         await page.goto('/inventory.html');
         await page.waitForLoadState('networkidle');
