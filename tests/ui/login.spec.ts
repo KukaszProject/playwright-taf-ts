@@ -1,5 +1,5 @@
-import {test, expect} from '../fixtures/base.test';
-import {USER_DATA} from '../data/user.data';
+import {test, expect} from '../../fixtures/base.test';
+import {USER_DATA} from '../../data/user.data';
 
 test.use({ storageState: {cookies: [], origins: []} });
 

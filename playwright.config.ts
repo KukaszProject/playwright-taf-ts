@@ -15,7 +15,6 @@ export default defineConfig({
     ['blob', { outputDir: process.env.BLOB_DIR || 'blob-report'}],
   ],
   use: {
-    baseURL: 'http://www.saucedemo.com',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -29,33 +28,49 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'api-tests',
+      testDir: './tests/api',
+      use: {
+        baseURL: 'https://jsonplaceholder.typicode.com',
+      },
+    },
+    {
       name: 'setup',
       testDir: './config',
       testMatch: /.*auth\.setup\.ts/,
+      use: {
+        baseURL: 'http://www.saucedemo.com',
+      },
     },
     {
       name: 'chromium',
+      testDir: './tests/ui',
       use: { 
         ...devices['Desktop Chrome'],
-        storageState: '.auth/user.json'
+        storageState: '.auth/user.json',
+        baseURL: 'http://www.saucedemo.com',
       },
       dependencies: ['setup'],
     },
 
     {
       name: 'firefox',
+      testDir: './tests/ui',
       use: { 
         ...devices['Desktop Firefox'],
-        storageState: '.auth/user.json'
+        storageState: '.auth/user.json',
+        baseURL: 'http://www.saucedemo.com',
       },
       dependencies: ['setup']
     },
 
     {
       name: 'webkit',
+      testDir: './tests/ui',
       use: { 
         ...devices['Desktop Safari'],
         storageState: '.auth/user.json',
+        baseURL: 'http://www.saucedemo.com',
        },
       
       dependencies: ['setup']

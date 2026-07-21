@@ -1,6 +1,6 @@
-import {test, expect} from '../fixtures/base.test';
-import {USER_DATA} from '../data/user.data';
-import {CATALOG_DATA} from '../data/catalog.data';
+import {test, expect} from '../../fixtures/base.test';
+import {USER_DATA} from '../../data/user.data';
+import {CATALOG_DATA} from '../../data/catalog.data';
 
 test.describe('Cart Page Flow', () => {
     test.beforeEach(async ({page, inventoryPage}) => {

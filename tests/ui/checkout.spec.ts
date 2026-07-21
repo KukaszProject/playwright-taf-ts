@@ -1,7 +1,7 @@
-import {test, expect} from '../fixtures/base.test';
-import {USER_DATA} from '../data/user.data';
-import {CATALOG_DATA} from '../data/catalog.data';
-import {CHECKOUT_DATA} from '../data/checkout.data';
+import {test, expect} from '../../fixtures/base.test';
+import {USER_DATA} from '../../data/user.data';
+import {CATALOG_DATA} from '../../data/catalog.data';
+import {CHECKOUT_DATA} from '../../data/checkout.data';
 
 test.describe('Checkout Page Flow', () => {
 
