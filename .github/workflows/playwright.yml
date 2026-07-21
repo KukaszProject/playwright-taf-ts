@@ -26,30 +26,30 @@ jobs:
     - name: Run API Tests
       run: npx playwright test --project=api-tests
       env: 
-        BLOB_DIR: blob-api
+        ALLURE_DIR: allure-api
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
     - name: Run UI Functional Playwright tests
       run: npx playwright test --grep-invert "@a11y|@visual" --project=chromium --project=firefox --project=webkit
-      env: 
-        BLOB_DIR: blob-functional
+      env:
+        ALLURE_DIR: allure-functional
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
     - name: Run Non Functional tests
       run: npx playwright test --grep "@a11y|@visual" --project=chromium --project=firefox --project=webkit
       continue-on-error: true
-      env: 
-        BLOB_DIR: blob-non-functional
+      env:
+        ALLURE_DIR: allure-non-functional
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
-    - name: Merge Playwright Reports
+    - name: Generate Allure Report
       if: ${{ !cancelled() }}
       run: |
-        mkdir -p all-report
-        cp -r blob-api/* all-report/
-        cp -r blob-functional/* all-report/ 
-        cp -r blob-non-functional/* all-report/ 
-        npx playwright merge-reports --reporter=html all-report
+        mkdir -p all-results
+        cp -r allure-api/* all-results/
+        cp -r allure-functional/* all-results/ 
+        cp -r allure-non-functional/* all-results/ 
+        npx allure generate all-results --clean -o playwright-report
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
