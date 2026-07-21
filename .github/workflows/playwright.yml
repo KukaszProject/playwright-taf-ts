@@ -23,14 +23,20 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run FunctionalPlaywright tests
-      run: npx playwright test --grep-invert "@a11y|@visual"
+    - name: Run API Tests
+      run: npx playwright test --project=api-tests
+      env: 
+        BLOB_DIR: blob-api
+        SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+        SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
+    - name: Run UI Functional Playwright tests
+      run: npx playwright test --grep-invert "@a11y|@visual" --project=chromium --project=firefox --project=webkit
       env: 
         BLOB_DIR: blob-functional
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
     - name: Run Non Functional tests
-      run: npx playwright test --grep "@a11y|@visual"
+      run: npx playwright test --grep "@a11y|@visual" --project=chromium --project=firefox --project=webkit
       continue-on-error: true
       env: 
         BLOB_DIR: blob-non-functional
@@ -40,6 +46,7 @@ jobs:
       if: ${{ !cancelled() }}
       run: |
         mkdir -p all-report
+        cp -r blob-api/* all-report/
         cp -r blob-functional/* all-report/ 
         cp -r blob-non-functional/* all-report/ 
         npx playwright merge-reports --reporter=html all-report
