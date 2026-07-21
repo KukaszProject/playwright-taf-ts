@@ -24,13 +24,13 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run FunctionalPlaywright tests
-      run: npx playwright test --grep-invert "@a11y|@visual"
+      run: npx playwright test --grep-invert "@a11y|@visual" --reporter=blob --output=blob-report-functional
       env: 
         PLAYWRIGHT_BLOB_OUTPUT_DIR: blob-report-functional
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
     - name: Run Non Functional tests
-      run: npx playwright test --grep "@a11y|@visual"
+      run: npx playwright test --grep "@a11y|@visual" --reporter=blob --output=blob-report-non-functional
       continue-on-error: true
       env: 
         PLAYWRIGHT_BLOB_OUTPUT_DIR: blob-report-non-functional
@@ -40,8 +40,8 @@ jobs:
       if: ${{ !cancelled() }}
       run: |
         mkdir -p all-report
-        cp -r blob-report-functional/* all-report/
-        cp -r blob-report-non-functional/* all-report/
+        cp -r blob-report-functional/* all-report/ 2>dev/null || true
+        cp -r blob-report-non-functional/* all-report/ 2>dev/null || true
         npx playwright merge-reports --reporter=html all-report
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
