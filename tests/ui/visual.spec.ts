@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/base.test';
+import { test, expect } from '../../fixtures/base.test';
 
 test.describe('Visual Baseline - logged out - @visual', () => {
     test.use({ storageState: {cookies: [], origins: []} });

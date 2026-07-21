@@ -1,5 +1,5 @@
-import {test, expect} from '../fixtures/base.test';
-import {CATALOG_DATA} from '../data/catalog.data';
+import {test, expect} from '../../fixtures/base.test';
+import {CATALOG_DATA} from '../../data/catalog.data';
 
 test.describe('Inventory Page Flow', () => {
 
