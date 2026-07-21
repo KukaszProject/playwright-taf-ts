@@ -18,7 +18,8 @@
   "homepage": "https://github.com/KukaszProject/playwright-taf-ts#readme",
   "devDependencies": {
     "@playwright/test": "^1.61.1",
-    "@types/node": "^26.1.1"
+    "@types/node": "^26.1.1",
+    "allure-playwright": "^3.10.2"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.12.1",

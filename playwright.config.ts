@@ -11,8 +11,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
-    ['html'],
-    ['blob', { outputDir: process.env.BLOB_DIR || 'blob-report'}],
+    ['allure-playwright', { resultsDir: process.env.ALLURE_DIR || 'allure-results' }],
   ],
   use: {
     trace: 'retain-on-failure',
