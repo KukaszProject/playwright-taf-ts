@@ -26,14 +26,23 @@ jobs:
     - name: Run FunctionalPlaywright tests
       run: npx playwright test --grep-invert "@a11y|@visual"
       env: 
+        BLOB_DIR: blob-functional
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
     - name: Run Non Functional tests
       run: npx playwright test --grep "@a11y|@visual"
       continue-on-error: true
       env: 
+        BLOB_DIR: blob-non-functional
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
+    - name: Merge Playwright Reports
+      if: ${{ !cancelled() }}
+      run: |
+        mkdir -p all-report
+        cp -r blob-functional/* all-report/ 
+        cp -r blob-non-functional/* all-report/ 
+        npx playwright merge-reports --reporter=html all-report
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
