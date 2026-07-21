@@ -49,12 +49,6 @@ It performs these steps:
 - uploads the Playwright HTML report as a pipeline artifact
 - publishes the same report to GitHub Pages for live browser access
 
-## Latest CI Result Snapshot
-
-[![View Latest Test Report](https://img.shields.io/badge/View_Latest_Report-Playwright_HTML-2EAD33?logo=playwright&logoColor=white)](https://KukaszProject.github.io/playwright-taf-ts/)
-
-The latest captured run shows 12 accessibility failures across 4 pages and 3 browsers. The reported issues are consistent across the suite: missing main landmark, missing level-one heading, and page content not fully contained by landmarks.
-
 ## Running Locally
 
 Run the full suite directly with Playwright:
