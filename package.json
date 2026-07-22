@@ -9,7 +9,8 @@
     "test:ui:qa": "cross-env TEST_ENV=qa npx playwright test --project=ui-tests",
     "test:ui:staging": "cross-env TEST_ENV=staging npx playwright test --project=ui-tests",
     "test:api:qa": "cross-env TEST_ENV=qa npx playwright test --project=api-tests",
-    "test:api:staging": "cross-env TEST_ENV=staging npx playwright test --project=api-tests"
+    "test:api:staging": "cross-env TEST_ENV=staging npx playwright test --project=api-tests",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -27,11 +28,19 @@
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.1.1",
     "allure-playwright": "^3.10.2",
-    "cross-env": "^10.1.0"
+    "cross-env": "^10.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.1.1",
+    "prettier": "^3.9.6"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.12.1",
     "@faker-js/faker": "^10.5.0",
     "dotenv": "^17.4.2"
+  },
+  "lint-staged": {
+    "**/*.{ts,js,json,md}": [
+      "prettier --write"
+    ]
   }
 }
