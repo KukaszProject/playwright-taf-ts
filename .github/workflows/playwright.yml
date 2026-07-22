@@ -4,6 +4,16 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select the environment to run the tests'
+        required: true
+        default: 'qa'
+        type: choice
+        options:
+          - qa
+          - staging
 
 permissions:
   contents: read
@@ -26,12 +36,14 @@ jobs:
     - name: Run API Tests
       run: npx playwright test --project=api-tests
       env: 
+        TEST_ENV: ${{ github.event.inputs.environment || 'qa' }}
         ALLURE_DIR: allure-api
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
     - name: Run UI Functional Playwright tests
       run: npx playwright test --grep-invert "@a11y|@visual" --project=chromium --project=firefox --project=webkit
       env:
+        TEST_ENV: ${{ github.event.inputs.environment || 'qa' }}
         ALLURE_DIR: allure-functional
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
@@ -39,6 +51,7 @@ jobs:
       run: npx playwright test --grep "@a11y|@visual" --project=chromium --project=firefox --project=webkit
       continue-on-error: true
       env:
+        TEST_ENV: ${{ github.event.inputs.environment || 'qa' }}
         ALLURE_DIR: allure-non-functional
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}

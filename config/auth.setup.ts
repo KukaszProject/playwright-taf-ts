@@ -1,6 +1,7 @@
 import {test as setup} from '@playwright/test';
 import {LoginPage} from '../pages/login.page';
 import {USER_DATA} from '../data/user.data';
+import {config} from './environment.config';
 
 const authFile = '.auth/user.json';
 
@@ -9,7 +10,7 @@ setup('Setup authentication', async ({page}) => {
 
     await loginPage.navigate();
     await loginPage.login(
-        USER_DATA.validUser.username, 
+        config.SAUCE_USERNAME, 
         USER_DATA.validUser.password
     );
 

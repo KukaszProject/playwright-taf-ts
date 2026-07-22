@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:qa": "cross-env TEST_ENV=qa npx playwright test",
+    "test:staging": "cross-env TEST_ENV=staging npx playwright test",
+    "test:ui:qa": "cross-env TEST_ENV=qa npx playwright test --project=ui-tests",
+    "test:ui:staging": "cross-env TEST_ENV=staging npx playwright test --project=ui-tests",
+    "test:api:qa": "cross-env TEST_ENV=qa npx playwright test --project=api-tests",
+    "test:api:staging": "cross-env TEST_ENV=staging npx playwright test --project=api-tests"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KukaszProject/playwright-taf-ts.git"
@@ -19,7 +26,8 @@
   "devDependencies": {
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.1.1",
-    "allure-playwright": "^3.10.2"
+    "allure-playwright": "^3.10.2",
+    "cross-env": "^10.1.0"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.12.1",

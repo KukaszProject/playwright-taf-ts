@@ -1,8 +1,13 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import path from 'path';
+import { ENV_CONFIG } from './config/environment.config';
 
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+const ENV = (process.env.TEST_ENV || 'qa') as keyof typeof ENV_CONFIG;
+
+dotenv.config({ path: path.resolve(__dirname, `.env`) });
+
+const URLS = ENV_CONFIG[ENV];
 
 export default defineConfig({
   testDir: './tests',
@@ -30,7 +35,7 @@ export default defineConfig({
       name: 'api-tests',
       testDir: './tests/api',
       use: {
-        baseURL: 'https://jsonplaceholder.typicode.com',
+        baseURL: URLS.API_BASE_URL,
       },
     },
     {
@@ -38,7 +43,7 @@ export default defineConfig({
       testDir: './config',
       testMatch: /.*auth\.setup\.ts/,
       use: {
-        baseURL: 'http://www.saucedemo.com',
+        baseURL: URLS.UI_BASE_URL,
       },
     },
     {
@@ -47,7 +52,7 @@ export default defineConfig({
       use: { 
         ...devices['Desktop Chrome'],
         storageState: '.auth/user.json',
-        baseURL: 'http://www.saucedemo.com',
+        baseURL: URLS.UI_BASE_URL,
       },
       dependencies: ['setup'],
     },
@@ -58,7 +63,7 @@ export default defineConfig({
       use: { 
         ...devices['Desktop Firefox'],
         storageState: '.auth/user.json',
-        baseURL: 'http://www.saucedemo.com',
+        baseURL: URLS.UI_BASE_URL,
       },
       dependencies: ['setup']
     },
@@ -69,7 +74,7 @@ export default defineConfig({
       use: { 
         ...devices['Desktop Safari'],
         storageState: '.auth/user.json',
-        baseURL: 'http://www.saucedemo.com',
+        baseURL: URLS.UI_BASE_URL,
        },
       
       dependencies: ['setup']
