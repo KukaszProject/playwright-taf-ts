@@ -6,6 +6,16 @@ Senior-level TypeScript Playwright automation framework for the SauceDemo applic
 
 The project is organized around the Page Object Model, reusable fixtures, and domain-specific test data. It covers functional end-to-end flows, accessibility checks, and visual regression coverage across Chromium, Firefox, and WebKit.
 
+## Environment Handling
+
+The framework reads `TEST_ENV` at startup and validates it before any tests run.
+
+- Supported values: `qa`, `staging`
+- Missing `TEST_ENV` defaults to `qa`
+- Unsupported values fail fast with a clear error
+
+`qa` and `staging` are intentionally kept as separate logical environments for portfolio purposes, even though they currently point to the same SauceDemo endpoints.
+
 ## Tech Stack
 
 - Playwright Test
@@ -55,6 +65,13 @@ Run the full suite directly with Playwright:
 
 ```bash
 npx playwright test
+```
+
+You can also select an environment explicitly:
+
+```bash
+cross-env TEST_ENV=qa npx playwright test
+cross-env TEST_ENV=staging npx playwright test
 ```
 
 Useful commands:
