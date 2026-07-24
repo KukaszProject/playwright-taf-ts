@@ -8,3 +8,7 @@ node_modules/
 /playwright/.auth/
 
 node_modules/
+.auth/
+.env*
+blob*/
+allure*/

@@ -1,19 +1,14 @@
-import {test, expect} from '../fixtures/base.test';
-import {USER_DATA} from '../data/user.data';
-import {CATALOG_DATA} from '../data/catalog.data';
+import {test, expect} from '../../fixtures/base.test';
+import {CATALOG_DATA} from '../../data/catalog.data';
 
 test.describe('Inventory Page Flow', () => {
 
-    test.beforeEach(async ({loginPage}) => {
-        await loginPage.navigate();
-        await loginPage.login(
-            USER_DATA.validUser.username, 
-            USER_DATA.validUser.password
-        );
+    test.beforeEach(async ({page}) => {
+        await page.goto('/inventory.html');
     });
 
     test('Should verify inventory header title', async ({inventoryPage}) => {
-        const headerTitle = await inventoryPage.getHeaderTitle();
+        const headerTitle = inventoryPage.getHeaderTitle();
 
         await expect(headerTitle).toBeVisible();
         await expect(headerTitle).toHaveText('Products');
@@ -21,7 +16,7 @@ test.describe('Inventory Page Flow', () => {
 
     test('Should add a single item to the cart', async ({inventoryPage}) => {
         await inventoryPage.addItemsToCart(CATALOG_DATA.singleItem);
-        const shoppingCartBadge = await inventoryPage.getShoppingCartBadge();
+        const shoppingCartBadge = inventoryPage.getShoppingCartBadge();
 
         await expect(shoppingCartBadge).toBeVisible();
         await expect(shoppingCartBadge).toHaveText('1');
@@ -29,7 +24,7 @@ test.describe('Inventory Page Flow', () => {
 
     test('Should add multiple items to the cart', async ({inventoryPage}) => {
         await inventoryPage.addItemsToCart(CATALOG_DATA.multipleItems);
-        const shoppingCartBadge = await inventoryPage.getShoppingCartBadge();
+        const shoppingCartBadge = inventoryPage.getShoppingCartBadge();
 
         await expect(shoppingCartBadge).toBeVisible();
         await expect(shoppingCartBadge).toHaveText('4');

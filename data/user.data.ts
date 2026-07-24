@@ -1,14 +1,16 @@
+import { AUTH_CONFIG } from '../config/environment.config';
+
 export const USER_DATA = {
-    validUser: {
-        username: 'standard_user',
-        password: 'secret_sauce'
-    },
-    lockedUser: {
-        username: 'locked_out_user',
-        password: 'secret_sauce'
-    },
-    emptyUser: {
-        username: '',
-        password: ''
-    }
-}
+  validUser: {
+    username: AUTH_CONFIG.SAUCE_USERNAME,
+    password: AUTH_CONFIG.SAUCE_PASSWORD,
+  },
+  lockedUser: {
+    username: 'locked_out_user',
+    password: AUTH_CONFIG.SAUCE_PASSWORD,
+  },
+  emptyUser: {
+    username: '',
+    password: '',
+  },
+};

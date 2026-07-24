@@ -1,8 +1,10 @@
+import { faker } from '@faker-js/faker';
+
 export const CHECKOUT_DATA = {
     validCustomer: {
-        firstName: 'QA',
-        lastName: 'Engineer',
-        postalCode: '12345'
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
+        postalCode: faker.location.zipCode()
     },
     invalidCustomer: {
         firstName: '',
