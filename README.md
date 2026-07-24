@@ -41,7 +41,7 @@ The framework also requires these credentials at startup:
 | `tests/`             | Functional, accessibility, end-to-end, and visual regression specs. |
 | `playwright-report/` | Latest HTML report and trace artifacts from the pipeline.           |
 | `test-results/`      | Execution artifacts, failure context, screenshots, and videos.      |
-| `.auth/`             | Persisted authenticated storage state used by browser projects.     |
+| `.auth/user.json`    | Persisted authenticated storage state used by browser projects.     |
 
 ## Test Design
 
@@ -49,7 +49,7 @@ The framework also requires these credentials at startup:
 - Page objects own selectors and UI actions.
 - Fixtures compose the page objects into the test layer.
 - Data files centralize inputs instead of hard-coding values in specs.
-- The setup project prepares authenticated state before browser projects run.
+- The setup project prepares authenticated state in `.auth/user.json` before browser projects run.
 
 ## CI Pipeline
 
