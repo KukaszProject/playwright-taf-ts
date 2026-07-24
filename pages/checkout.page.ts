@@ -1,66 +1,70 @@
-import {Page, Locator} from "@playwright/test";
+import { Page, Locator } from '@playwright/test';
 
 export class CheckoutPage {
-    private readonly page: Page;
-    private readonly firstNameInput: Locator;
-    private readonly lastNameInput: Locator
-    private readonly postalCodeInput: Locator;
-    private readonly continueButton: Locator;
+  private readonly page: Page;
+  private readonly firstNameInput: Locator;
+  private readonly lastNameInput: Locator;
+  private readonly postalCodeInput: Locator;
+  private readonly continueButton: Locator;
 
-    private readonly finishButton: Locator;
-    private readonly cancelButton: Locator;
-    private readonly completeHeader: Locator;
-    private readonly errorMessage: Locator;
+  private readonly finishButton: Locator;
+  private readonly cancelButton: Locator;
+  private readonly completeHeader: Locator;
+  private readonly errorMessage: Locator;
 
-    constructor(page: Page) {
-        this.page = page;
-        this.firstNameInput = page.getByPlaceholder('First Name');
-        this.lastNameInput = page.getByPlaceholder('Last Name');
-        this.postalCodeInput = page.getByPlaceholder('Zip/Postal Code');
-        this.continueButton = page.locator('[data-test="continue"]');
+  constructor(page: Page) {
+    this.page = page;
+    this.firstNameInput = page.getByPlaceholder('First Name');
+    this.lastNameInput = page.getByPlaceholder('Last Name');
+    this.postalCodeInput = page.getByPlaceholder('Zip/Postal Code');
+    this.continueButton = page.locator('[data-test="continue"]');
 
-        this.finishButton = page.locator('[data-test="finish"]');
-        this.cancelButton = page.locator('[data-test="cancel"]');
-        this.completeHeader = page.locator('.complete-header');
-        this.errorMessage = page.locator('[data-test="error"]');
-    }
+    this.finishButton = page.locator('[data-test="finish"]');
+    this.cancelButton = page.locator('[data-test="cancel"]');
+    this.completeHeader = page.locator('.complete-header');
+    this.errorMessage = page.locator('[data-test="error"]');
+  }
 
-    async fillFirstName(firstName: string) {
-        await this.firstNameInput.fill(firstName);
-    }
+  async waitForReady() {
+    await this.firstNameInput.waitFor();
+  }
 
-    async fillLastName(lastName: string) {
-        await this.lastNameInput.fill(lastName);
-    }
+  async fillFirstName(firstName: string) {
+    await this.firstNameInput.fill(firstName);
+  }
 
-    async fillPostalCode(postalCode: string) {
-        await this.postalCodeInput.fill(postalCode);
-    }
+  async fillLastName(lastName: string) {
+    await this.lastNameInput.fill(lastName);
+  }
 
-    async clickContinueButton() {
-        await this.continueButton.click();
-    }
+  async fillPostalCode(postalCode: string) {
+    await this.postalCodeInput.fill(postalCode);
+  }
 
-    async fillCheckoutInformation(firstName: string, lastName: string, postalCode: string) {
-        await this.fillFirstName(firstName);
-        await this.fillLastName(lastName);
-        await this.fillPostalCode(postalCode);
-        await this.clickContinueButton();
-    }
+  async clickContinueButton() {
+    await this.continueButton.click();
+  }
 
-    async completeCheckout() {
-        await this.finishButton.click();
-    }
+  async fillCheckoutInformation(firstName: string, lastName: string, postalCode: string) {
+    await this.fillFirstName(firstName);
+    await this.fillLastName(lastName);
+    await this.fillPostalCode(postalCode);
+    await this.clickContinueButton();
+  }
 
-    async cancelCheckout() {
-        await this.cancelButton.click();
-    }
+  async completeCheckout() {
+    await this.finishButton.click();
+  }
 
-    getCompleteHeader(): Locator {
-        return this.completeHeader;
-    }
+  async cancelCheckout() {
+    await this.cancelButton.click();
+  }
 
-    getErrorMessage(): Locator {
-        return this.errorMessage;
-    }
+  getCompleteHeader(): Locator {
+    return this.completeHeader;
+  }
+
+  getErrorMessage(): Locator {
+    return this.errorMessage;
+  }
 }
