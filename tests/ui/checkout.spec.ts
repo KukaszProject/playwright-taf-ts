@@ -1,5 +1,4 @@
 import {test, expect} from '../../fixtures/base.test';
-import {USER_DATA} from '../../data/user.data';
 import {CATALOG_DATA} from '../../data/catalog.data';
 import {CHECKOUT_DATA} from '../../data/checkout.data';
 
@@ -36,6 +35,10 @@ test.describe('Checkout Page Flow', () => {
         await checkoutPage.fillFirstName(CHECKOUT_DATA.validCustomer.firstName);
         await checkoutPage.fillLastName(CHECKOUT_DATA.validCustomer.lastName);
         await checkoutPage.clickContinueButton();
+
+        const errorMessage = checkoutPage.getErrorMessage();
+        await expect(errorMessage).toBeVisible();
+        await expect(errorMessage).toHaveText('Error: Postal Code is required');
     });
 
 })
