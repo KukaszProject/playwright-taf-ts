@@ -1,36 +1,25 @@
-import {test, expect} from '../../fixtures/base.test';
-import {USER_DATA} from '../../data/user.data';
-import {CATALOG_DATA} from '../../data/catalog.data';
+import { test, expect } from '../../fixtures/base.test';
+import { CATALOG_DATA } from '../../data/catalog.data';
 
 test.describe('Cart Page Flow', () => {
-    test.beforeEach(async ({page, inventoryPage}) => {
-        await page.goto('/inventory.html');
-        await inventoryPage.addItemsToCart(CATALOG_DATA.multipleItems);
-        await inventoryPage.goToShoppingCart();
-    });
+  test('Should display cart title', async ({ cartWithItems }) => {
+    await expect(cartWithItems.getPageTitle()).toBeVisible();
+  });
 
-    test('Should display cart title', async ({cartPage}) => {
-        const title = cartPage.getPageTitle();
-        await expect(title).toBeVisible();
-    });
+  test('Should display correct items in the cart', async ({ cartWithItems }) => {
+    await expect(cartWithItems.getCartItems()).toHaveCount(CATALOG_DATA.multipleItems.length);
+  });
 
-    test('Should display correct items in the cart', async ({cartPage}) => {
-        const cartItems = cartPage.getCartItems();
-        await expect(cartItems).toHaveCount(CATALOG_DATA.multipleItems.length);
-    });
+  test('Should remove an item from the cart', async ({ cartWithItems }) => {
+    const itemToRemove = CATALOG_DATA.multipleItems[0];
+    await cartWithItems.removeItemFromCart(itemToRemove);
 
-    test('Should remove an item from the cart', async ({cartPage}) => {
-        const itemToRemove = CATALOG_DATA.multipleItems[0];
-        await cartPage.removeItemFromCart(itemToRemove);
+    await expect(cartWithItems.getCartItems()).toHaveCount(CATALOG_DATA.multipleItems.length - 1);
+    await expect(cartWithItems.getCartItem(itemToRemove)).toHaveCount(0);
+  });
 
-        const cartItems = cartPage.getCartItems();
-
-        await expect(cartItems).toHaveCount(CATALOG_DATA.multipleItems.length - 1);
-        await expect(cartPage.getCartItem(itemToRemove)).toHaveCount(0);
-    });
-
-    test('Should navigate to checkout page', async ({cartPage, page}) => {
-        await cartPage.goToCheckout();
-        await expect(page).toHaveURL(/.*checkout-step-one.html/);
-    });
+  test('Should navigate to checkout page', async ({ cartWithItems, page }) => {
+    await cartWithItems.goToCheckout();
+    await expect(page).toHaveURL(/.*checkout-step-one.html/);
+  });
 });
