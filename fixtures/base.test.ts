@@ -4,6 +4,7 @@ import { InventoryPage } from '../pages/inventory.page';
 import { CartPage } from '../pages/cart.page';
 import { CheckoutPage } from '../pages/checkout.page';
 import { HeaderComponent } from '../components/header.component';
+import { CATALOG_DATA } from '../data/catalog.data';
 
 type TestFixtures = {
   loginPage: LoginPage;
@@ -11,6 +12,8 @@ type TestFixtures = {
   cartPage: CartPage;
   checkoutPage: CheckoutPage;
   headerComponent: HeaderComponent;
+  cartWithItems: CartPage;
+  checkoutStepOne: CheckoutPage;
 };
 
 export const test = baseTest.extend<TestFixtures>({
@@ -28,6 +31,19 @@ export const test = baseTest.extend<TestFixtures>({
   },
   headerComponent: async ({ page }, use) => {
     await use(new HeaderComponent(page));
+  },
+  cartWithItems: async ({ page, inventoryPage, cartPage }, use) => {
+    await page.goto('/inventory.html');
+    await inventoryPage.waitForReady();
+    await inventoryPage.addItemsToCart(CATALOG_DATA.multipleItems);
+    await inventoryPage.goToShoppingCart();
+    await cartPage.waitForReady();
+    await use(cartPage);
+  },
+  checkoutStepOne: async ({ cartWithItems, checkoutPage }, use) => {
+    await cartWithItems.goToCheckout();
+    await checkoutPage.waitForReady();
+    await use(checkoutPage);
   },
 });
 
