@@ -1,52 +1,59 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator } from '@playwright/test';
 
 export class InventoryPage {
-    private readonly page: Page
-    private readonly headerTitle: Locator;
-    private readonly shoppingCartBadge: Locator;
-    private readonly sortDropdown: Locator;
-    private readonly itemPrices: Locator;
+  private readonly page: Page;
+  private readonly headerTitle: Locator;
+  private readonly shoppingCartBadge: Locator;
+  private readonly sortDropdown: Locator;
+  private readonly itemPrices: Locator;
 
-    constructor(page: Page) {
-        this.page = page;
-        this.headerTitle = page.locator('.title');
-        this.shoppingCartBadge = page.locator('.shopping_cart_badge');
-        this.sortDropdown = page.locator('.product_sort_container');
-        this.itemPrices = page.locator('.inventory_item_price');
-    }
+  private readonly inventoryList: Locator;
 
-    getHeaderTitle(): Locator {
-        return this.headerTitle;
-    }
+  constructor(page: Page) {
+    this.page = page;
+    this.headerTitle = page.locator('.title');
+    this.shoppingCartBadge = page.locator('.shopping_cart_badge');
+    this.sortDropdown = page.locator('.product_sort_container');
+    this.itemPrices = page.locator('.inventory_item_price');
+    this.inventoryList = page.locator('.inventory_list');
+  }
 
-    private getItemButtonLocator(itemName: string): Locator {
-        return this.page.locator(`.inventory_item:has-text("${itemName}") button`);
-    }
+  async waitForReady() {
+    await this.inventoryList.waitFor();
+  }
 
-    async addItemsToCart(items: string | string[]) {
-        const itemNames = Array.isArray(items) ? items : [items];
-        for (const itemName of itemNames) {
-            const itemButton = this.getItemButtonLocator(itemName);
-            
-            await itemButton.scrollIntoViewIfNeeded();
-            await itemButton.click();
-        }
-    }
+  getHeaderTitle(): Locator {
+    return this.headerTitle;
+  }
 
-    async sortItems(option: string) {
-        await this.sortDropdown.selectOption(option);
-    }
+  private getItemButtonLocator(itemName: string): Locator {
+    return this.page.locator(`.inventory_item:has-text("${itemName}") button`);
+  }
 
-    async getItemPrices(): Promise<number[]> {
-        const pricesText = await this.itemPrices.allTextContents();
-        return pricesText.map(price => parseFloat(price.replace('$', '')));
-    }
+  async addItemsToCart(items: string | string[]) {
+    const itemNames = Array.isArray(items) ? items : [items];
+    for (const itemName of itemNames) {
+      const itemButton = this.getItemButtonLocator(itemName);
 
-    async goToShoppingCart() {
-        await this.page.locator('.shopping_cart_link').click();
+      await itemButton.scrollIntoViewIfNeeded();
+      await itemButton.click();
     }
+  }
 
-    getShoppingCartBadge(): Locator {
-        return this.shoppingCartBadge;
-    }
+  async sortItems(option: string) {
+    await this.sortDropdown.selectOption(option);
+  }
+
+  async getItemPrices(): Promise<number[]> {
+    const pricesText = await this.itemPrices.allTextContents();
+    return pricesText.map((price) => parseFloat(price.replace('$', '')));
+  }
+
+  async goToShoppingCart() {
+    await this.page.locator('.shopping_cart_link').click();
+  }
+
+  getShoppingCartBadge(): Locator {
+    return this.shoppingCartBadge;
+  }
 }
