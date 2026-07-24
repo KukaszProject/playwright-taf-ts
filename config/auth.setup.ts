@@ -1,19 +1,15 @@
-import {test as setup} from '@playwright/test';
-import {LoginPage} from '../pages/login.page';
-import {USER_DATA} from '../data/user.data';
-import {config} from './environment.config';
+import { test as setup } from '@playwright/test';
+import { LoginPage } from '../pages/login.page';
+import { AUTH_CONFIG } from './environment.config';
 
 const authFile = '.auth/user.json';
 
-setup('Setup authentication', async ({page}) => {
-    const loginPage = new LoginPage(page);
+setup('Setup authentication', async ({ page }) => {
+  const loginPage = new LoginPage(page);
 
-    await loginPage.navigate();
-    await loginPage.login(
-        config.SAUCE_USERNAME, 
-        USER_DATA.validUser.password
-    );
+  await loginPage.navigate();
+  await loginPage.login(AUTH_CONFIG.SAUCE_USERNAME, AUTH_CONFIG.SAUCE_PASSWORD);
 
-    await page.waitForURL(/.*inventory.html/);
-    await page.context().storageState({path: authFile});
+  await page.waitForURL(/.*inventory.html/);
+  await page.context().storageState({ path: authFile });
 });

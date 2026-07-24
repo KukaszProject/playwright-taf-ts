@@ -28,9 +28,24 @@ function resolveEnvironment(envName: string | undefined): EnvName {
   }
 
   throw new Error(
-    `Unsupported TEST_ENV value: ${envName}. Allowed values: ${Object.keys(ENV_CONFIG).join(', ')}`
+    `Unsupported TEST_ENV value: ${envName}. Allowed values: ${Object.keys(ENV_CONFIG).join(', ')}`,
   );
 }
 
 export const currentEnv = resolveEnvironment(process.env.TEST_ENV);
 export const config = ENV_CONFIG[currentEnv];
+
+function requireEnv(name: 'SAUCE_USERNAME' | 'SAUCE_PASSWORD'): string {
+  const value = process.env[name];
+
+  if (!value || !value.trim()) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+
+  return value;
+}
+
+export const AUTH_CONFIG = {
+  SAUCE_USERNAME: requireEnv('SAUCE_USERNAME'),
+  SAUCE_PASSWORD: requireEnv('SAUCE_PASSWORD'),
+} as const;
