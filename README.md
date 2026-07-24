@@ -14,7 +14,12 @@ The framework reads `TEST_ENV` at startup and validates it before any tests run.
 - Missing `TEST_ENV` defaults to `qa`
 - Unsupported values fail fast with a clear error
 
-`qa` and `staging` are intentionally kept as separate logical environments for portfolio purposes, even though they currently point to the same SauceDemo endpoints.
+The framework also requires these credentials at startup:
+
+- `SAUCE_USERNAME`
+- `SAUCE_PASSWORD`
+
+`qa` and `staging` are intentionally kept as separate logical environments for portfolio purposes, even though they currently point to the same endpoints.
 
 ## Tech Stack
 
@@ -26,17 +31,17 @@ The framework reads `TEST_ENV` at startup and validates it before any tests run.
 
 ## Repository Structure
 
-| Path | Purpose |
-| --- | --- |
-| `components/` | Shared UI building blocks used by page objects. |
-| `config/` | Authentication bootstrap and test setup. |
-| `data/` | Test data for users, catalog items, and checkout payloads. |
-| `fixtures/` | Custom fixtures that expose page objects to tests. |
-| `pages/` | Page Object Model layer for login, inventory, cart, and checkout. |
-| `tests/` | Functional, accessibility, end-to-end, and visual regression specs. |
-| `playwright-report/` | Latest HTML report and trace artifacts from the pipeline. |
-| `test-results/` | Execution artifacts, failure context, screenshots, and videos. |
-| `.auth/` | Persisted authenticated storage state used by browser projects. |
+| Path                 | Purpose                                                             |
+| -------------------- | ------------------------------------------------------------------- |
+| `components/`        | Shared UI building blocks used by page objects.                     |
+| `config/`            | Authentication bootstrap and test setup.                            |
+| `data/`              | Test data for users, catalog items, and checkout payloads.          |
+| `fixtures/`          | Custom fixtures that expose page objects to tests.                  |
+| `pages/`             | Page Object Model layer for login, inventory, cart, and checkout.   |
+| `tests/`             | Functional, accessibility, end-to-end, and visual regression specs. |
+| `playwright-report/` | Latest HTML report and trace artifacts from the pipeline.           |
+| `test-results/`      | Execution artifacts, failure context, screenshots, and videos.      |
+| `.auth/user.json`    | Persisted authenticated storage state used by browser projects.     |
 
 ## Test Design
 
@@ -44,7 +49,7 @@ The framework reads `TEST_ENV` at startup and validates it before any tests run.
 - Page objects own selectors and UI actions.
 - Fixtures compose the page objects into the test layer.
 - Data files centralize inputs instead of hard-coding values in specs.
-- The setup project prepares authenticated state before browser projects run.
+- The setup project prepares authenticated state in `.auth/user.json` before browser projects run.
 
 ## CI Pipeline
 

@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { AUTH_STATE_PATH } from './config/auth.state';
 import { config as envConfig } from './config/environment.config';
 
 export default defineConfig({
@@ -7,9 +8,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ['allure-playwright', { resultsDir: process.env.ALLURE_DIR || 'allure-results' }],
-  ],
+  reporter: [['allure-playwright', { resultsDir: process.env.ALLURE_DIR || 'allure-results' }]],
   use: {
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
@@ -41,9 +40,9 @@ export default defineConfig({
     {
       name: 'chromium',
       testDir: './tests/ui',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
-        storageState: '.auth/user.json',
+        storageState: AUTH_STATE_PATH,
         baseURL: envConfig.UI_BASE_URL,
       },
       dependencies: ['setup'],
@@ -52,9 +51,9 @@ export default defineConfig({
     {
       name: 'firefox',
       testDir: './tests/ui',
-      use: { 
+      use: {
         ...devices['Desktop Firefox'],
-        storageState: '.auth/user.json',
+        storageState: AUTH_STATE_PATH,
         baseURL: envConfig.UI_BASE_URL,
       },
       dependencies: ['setup'],
@@ -63,13 +62,12 @@ export default defineConfig({
     {
       name: 'webkit',
       testDir: './tests/ui',
-      use: { 
+      use: {
         ...devices['Desktop Safari'],
-        storageState: '.auth/user.json',
+        storageState: AUTH_STATE_PATH,
         baseURL: envConfig.UI_BASE_URL,
       },
       dependencies: ['setup'],
     },
-
   ],
 });

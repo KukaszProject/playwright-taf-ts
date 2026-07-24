@@ -1,14 +1,16 @@
+import { AUTH_CONFIG } from '../config/environment.config';
+
 export const USER_DATA = {
-    validUser: {
-        username: process.env.SAUCE_USERNAME as string,
-        password: process.env.SAUCE_PASSWORD as string
-    },
-    lockedUser: {
-        username: 'locked_out_user',
-        password: process.env.SAUCE_PASSWORD as string
-    },
-    emptyUser: {
-        username: '',
-        password: ''
-    }
-}
+  validUser: {
+    username: AUTH_CONFIG.SAUCE_USERNAME,
+    password: AUTH_CONFIG.SAUCE_PASSWORD,
+  },
+  lockedUser: {
+    username: 'locked_out_user',
+    password: AUTH_CONFIG.SAUCE_PASSWORD,
+  },
+  emptyUser: {
+    username: '',
+    password: '',
+  },
+};
