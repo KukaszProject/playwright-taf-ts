@@ -6,8 +6,8 @@
   "scripts": {
     "test:qa": "cross-env TEST_ENV=qa npx playwright test",
     "test:staging": "cross-env TEST_ENV=staging npx playwright test",
-    "test:ui:qa": "cross-env TEST_ENV=qa npx playwright test --project=ui-tests",
-    "test:ui:staging": "cross-env TEST_ENV=staging npx playwright test --project=ui-tests",
+    "test:ui:qa": "cross-env TEST_ENV=qa npx playwright test --project=chromium --project=firefox --project=webkit",
+    "test:ui:staging": "cross-env TEST_ENV=staging npx playwright test --project=chromium --project=firefox --project=webkit",
     "test:api:qa": "cross-env TEST_ENV=qa npx playwright test --project=api-tests",
     "test:api:staging": "cross-env TEST_ENV=staging npx playwright test --project=api-tests"
   },
