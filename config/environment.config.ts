@@ -1,3 +1,8 @@
+import * as dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
+
 export const ENV_CONFIG = {
   qa: {
     UI_BASE_URL: 'https://www.saucedemo.com',
@@ -9,7 +14,23 @@ export const ENV_CONFIG = {
     API_BASE_URL: 'https://jsonplaceholder.typicode.com',
     SAUCE_USERNAME: 'performance_glitch_user',
   },
-};
+} as const;
 
-const currentEnv = (process.env.TEST_ENV || 'qa') as keyof typeof ENV_CONFIG;
+type EnvName = keyof typeof ENV_CONFIG;
+
+function resolveEnvironment(envName: string | undefined): EnvName {
+  if (!envName) {
+    return 'qa';
+  }
+
+  if (envName in ENV_CONFIG) {
+    return envName as EnvName;
+  }
+
+  throw new Error(
+    `Unsupported TEST_ENV value: ${envName}. Allowed values: ${Object.keys(ENV_CONFIG).join(', ')}`
+  );
+}
+
+export const currentEnv = resolveEnvironment(process.env.TEST_ENV);
 export const config = ENV_CONFIG[currentEnv];

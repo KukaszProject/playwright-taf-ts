@@ -1,13 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import * as dotenv from 'dotenv';
-import path from 'path';
-import { ENV_CONFIG } from './config/environment.config';
-
-const ENV = (process.env.TEST_ENV || 'qa') as keyof typeof ENV_CONFIG;
-
-dotenv.config({ path: path.resolve(__dirname, `.env`) });
-
-const URLS = ENV_CONFIG[ENV];
+import { config as envConfig } from './config/environment.config';
 
 export default defineConfig({
   testDir: './tests',
@@ -35,7 +27,7 @@ export default defineConfig({
       name: 'api-tests',
       testDir: './tests/api',
       use: {
-        baseURL: URLS.API_BASE_URL,
+        baseURL: envConfig.API_BASE_URL,
       },
     },
     {
@@ -43,7 +35,7 @@ export default defineConfig({
       testDir: './config',
       testMatch: /.*auth\.setup\.ts/,
       use: {
-        baseURL: URLS.UI_BASE_URL,
+        baseURL: envConfig.UI_BASE_URL,
       },
     },
     {
@@ -52,7 +44,7 @@ export default defineConfig({
       use: { 
         ...devices['Desktop Chrome'],
         storageState: '.auth/user.json',
-        baseURL: URLS.UI_BASE_URL,
+        baseURL: envConfig.UI_BASE_URL,
       },
       dependencies: ['setup'],
     },
@@ -63,9 +55,9 @@ export default defineConfig({
       use: { 
         ...devices['Desktop Firefox'],
         storageState: '.auth/user.json',
-        baseURL: URLS.UI_BASE_URL,
+        baseURL: envConfig.UI_BASE_URL,
       },
-      dependencies: ['setup']
+      dependencies: ['setup'],
     },
 
     {
@@ -74,10 +66,9 @@ export default defineConfig({
       use: { 
         ...devices['Desktop Safari'],
         storageState: '.auth/user.json',
-        baseURL: URLS.UI_BASE_URL,
-       },
-      
-      dependencies: ['setup']
+        baseURL: envConfig.UI_BASE_URL,
+      },
+      dependencies: ['setup'],
     },
 
   ],
