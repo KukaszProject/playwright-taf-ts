@@ -6,4 +6,9 @@ export const MOCK_API_DATA = {
     name: faker.person.fullName(),
     email: faker.internet.email(),
   },
+  usersListResponse: Array.from({ length: 3 }, (_, i) => ({
+    id: i + 1,
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+  })),
 };
